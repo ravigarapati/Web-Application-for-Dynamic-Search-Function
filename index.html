@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes-->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body ng-app="dashboard" ng-controller="dashboardCtrl">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Dashboard</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="query" ng-change="search()" placeholder="Search&hellip;">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="search()">Go</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-striped table-condensed table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th class="alteration">Alteration&nbsp;<a ng-click="sort_by('alteration')"><i class="glyphicon glyphicon-sort"></i></a></th>
+                        <th class="hugo">Hugo&nbsp;<a ng-click="sort_by('hugo')"><i class="glyphicon glyphicon-sort"></i></a></th>
+                        <th class="geneId">Entrez  Id&nbsp;<a ng-click="sort_by('geneId')"><i class="glyphicon glyphicon-sort"></i></a></th>
+                        <th class="oncoGene">OncoGene&nbsp;<a ng-click="sort_by('oncoGene')"><i class="glyphicon glyphicon-sort"></i></a></th>
+                        <th class="tsg">TSG&nbsp;<a ng-click="sort_by('tsg')"><i class="glyphicon glyphicon-sort"></i></a></th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <td colspan="6">
+                        <div class="pull-right">
+                            <ul class="pagination">
+                                <li ng-class="{disabled: currentPage == 0}">
+                                    <a href ng-click="prevPage()">« Prev</a>
+                                </li>
+                                <li ng-repeat="n in range(pagedItems.length)"
+                                    ng-class="{active: n == currentPage}"
+                                    ng-click="setPage()">
+                                    <a href ng-bind="n + 1">1</a>
+                                </li>
+                                <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
+                                    <a href ng-click="nextPage()">Next »</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                    </tfoot>
+                    <tbody>
+                    <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sortingOrder:reverse">
+                        <td>{{item.alteration}}</td>
+                        <td>{{item.hugo}}</td>
+                        <td>{{item.geneId}}</td>
+                        <td>{{item.oncoGene}}</td>
+                        <td>{{item.tsg}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <canvas id="bar" class="chart chart-bar"
+                        chart-data="data" chart-labels="labels"> chart-series="series"
+                </canvas>
+            </div>
+        </div>
+
+        <hr>
+
+        <footer>
+            <p>&copy; 2017 Company, Inc.</p>
+        </footer>
+    </div> <!-- /container -->
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
+<script src="js/Chart.min.js"></script>
+<script src="js/angular-chart.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
